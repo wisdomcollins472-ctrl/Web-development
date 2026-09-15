@@ -1,60 +1,16 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Apex Motors — premium pre-owned and new vehicles. Browse inventory, calculate finance and book a test drive." />
-  <title>Apex Motors | Premium Automotive</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-</head>
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="Apex Motors — premium vehicles, transparent pricing and a better car-buying experience." /><title>Apex Motors | Premium Automotive</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css" /></head>
 <body>
-  <header class="nav-wrap">
-    <nav class="nav container">
-      <a class="brand" href="#home"><span>APEX</span><small>MOTORS</small></a>
-      <button class="menu" id="menuBtn" aria-label="Open menu">☰</button>
-      <div class="nav-links" id="navLinks">
-        <a href="#inventory">Inventory</a><a href="#why">Why Apex</a><a href="#finance">Finance</a><a href="#contact">Contact</a>
-        <a class="nav-cta" href="#test-drive">Book a Test Drive</a>
-      </div>
-    </nav>
-  </header>
-
-  <main id="home">
-    <section class="hero">
-      <div class="hero-overlay"></div>
-      <div class="container hero-content">
-        <p class="eyebrow">PREMIUM AUTOMOTIVE • EST. 2012</p>
-        <h1>Drive something<br><em>worth remembering.</em></h1>
-        <p class="hero-copy">Curated vehicles. Transparent pricing. A buying experience built around you.</p>
-        <div class="hero-actions"><a class="btn primary" href="#inventory">Explore Inventory <span>→</span></a><a class="btn ghost" href="#test-drive">Book a Test Drive</a></div>
-        <div class="hero-stats"><div><strong>250+</strong><span>Vehicles sold</span></div><div><strong>4.9/5</strong><span>Customer rating</span></div><div><strong>12 yrs</strong><span>Industry experience</span></div></div>
-      </div>
-    </section>
-
-    <section class="search-panel container" aria-label="Vehicle search">
-      <div><span>Make</span><select id="make"><option value="all">All makes</option><option>Toyota</option><option>Mercedes</option><option>BMW</option><option>Lexus</option></select></div>
-      <div><span>Body type</span><select id="body"><option value="all">Any body type</option><option>SUV</option><option>Saloon</option><option>Coupe</option></select></div>
-      <div><span>Max price</span><select id="price"><option value="999999">Any price</option><option value="30000000">₦30M</option><option value="50000000">₦50M</option><option value="70000000">₦70M</option></select></div>
-      <button class="search-btn" id="searchBtn">Search vehicles →</button>
-    </section>
-
-    <section class="section container" id="inventory">
-      <div class="section-head"><div><p class="eyebrow">OUR INVENTORY</p><h2>Find your next <em>statement.</em></h2></div><a href="#inventory" id="clearFilters">View all vehicles →</a></div>
-      <div class="inventory" id="inventoryGrid"></div>
-      <p class="empty" id="empty">No vehicles match those filters. Try broadening your search.</p>
-    </section>
-
-    <section class="feature" id="why"><div class="container split"><div><p class="eyebrow">THE APEX STANDARD</p><h2>Buying a car should feel <em>better.</em></h2><p>We inspect every vehicle, explain every detail and keep pricing straightforward. No pressure. No confusing surprises.</p><div class="checks"><span>✓ Multi-point inspection</span><span>✓ Transparent pricing</span><span>✓ Flexible financing</span><span>✓ Nationwide delivery</span></div><a class="btn primary" href="#contact">Talk to an advisor →</a></div><div class="quote-card"><span class="quote">“</span><p>The easiest car-buying experience I've ever had. Everything was exactly as described.</p><strong>Daniel O.</strong><small>Verified customer</small></div></div></section>
-
-    <section class="section finance" id="finance"><div class="container finance-box"><div><p class="eyebrow">FINANCE CALCULATOR</p><h2>Know your numbers<br><em>before you visit.</em></h2><p>Get an instant estimate of your monthly payment. Adjust the figures to fit your budget.</p></div><div class="calculator"><label>Vehicle price <b id="priceOut">₦45,000,000</b><input id="carPrice" type="range" min="5000000" max="100000000" step="500000" value="45000000"></label><label>Deposit <b id="depositOut">₦9,000,000</b><input id="deposit" type="range" min="0" max="50000000" step="500000" value="9000000"></label><label>Term <b id="termOut">48 months</b><input id="term" type="range" min="12" max="72" step="12" value="48"></label><div class="monthly"><span>Estimated monthly</span><strong id="monthly">₦1,051,875</strong></div></div></div></section>
-
-    <section class="section test" id="test-drive"><div class="container"><div class="section-head"><div><p class="eyebrow">COME EXPERIENCE IT</p><h2>Book a <em>test drive.</em></h2></div><p>Pick a vehicle and tell us when you'd like to visit. We'll confirm your appointment.</p></div><form id="testForm" class="form"><input required placeholder="Full name" id="name"><input required type="tel" placeholder="Phone / WhatsApp" id="phone"><select required id="vehicle"><option value="">Select a vehicle</option></select><input required type="date" id="date"><button class="btn primary" type="submit">Request test drive →</button></form><div class="form-message" id="formMessage"></div></div></section>
-  </main>
-
-  <footer id="contact"><div class="container footer-grid"><div><a class="brand" href="#home"><span>APEX</span><small>MOTORS</small></a><p>Premium automotive, without the premium pressure.</p></div><div><h4>Visit</h4><p>12 Admiralty Way<br>Lekki Phase 1, Lagos</p></div><div><h4>Contact</h4><p>+234 803 000 0000<br>hello@apexmotors.ng</p></div><div><h4>Hours</h4><p>Mon–Sat: 8am–6pm<br>Sunday: 11am–4pm</p></div></div><div class="footer-bottom container"><span>© 2026 Apex Motors</span><span>Built with care by NEXORA</span></div></footer>
-  <script src="script.js"></script>
-</body>
-</html>
+<header class="nav-wrap"><nav class="nav container"><a class="brand" href="#home"><span>APEX</span><small>MOTORS</small></a><button class="menu" id="menuBtn" aria-label="Open menu">☰</button><div class="nav-links" id="navLinks"><a href="#inventory">Inventory</a><a href="#why">Why Apex</a><a href="#finance">Finance</a><a href="#contact">Contact</a><a class="nav-cta" href="#test-drive">Book a Test Drive</a></div></nav></header>
+<main id="home">
+<section class="hero"><div class="container hero-content"><p class="eyebrow">PREMIUM AUTOMOTIVE • EST. 2012</p><h1>Drive something<br><em>worth remembering.</em></h1><p class="hero-copy">Curated vehicles. Transparent pricing. A buying experience built around you.</p><div class="hero-actions"><a class="btn primary" href="#inventory">Explore Inventory <span>→</span></a><a class="btn ghost" href="#test-drive">Book a Test Drive</a></div><div class="hero-stats"><div><strong>250+</strong><span>Vehicles sold</span></div><div><strong>4.9/5</strong><span>Customer rating</span></div><div><strong>12 yrs</strong><span>Industry experience</span></div></div></div></section>
+<section class="search-panel container" aria-label="Vehicle search"><div><span>Make</span><select id="make"><option value="all">All makes</option><option>Toyota</option><option>Mercedes</option><option>BMW</option><option>Lexus</option></select></div><div><span>Body type</span><select id="body"><option value="all">Any body type</option><option>SUV</option><option>Saloon</option><option>Coupe</option></select></div><div><span>Max price</span><select id="price"><option value="999999999">Any price</option><option value="30000000">₦30M</option><option value="50000000">₦50M</option><option value="70000000">₦70M</option></select></div><button class="search-btn" id="searchBtn">Search vehicles →</button></section>
+<section class="section container" id="inventory"><div class="section-head"><div><p class="eyebrow">OUR INVENTORY</p><h2>Find your next <em>statement.</em></h2></div><a href="#inventory" id="clearFilters">View all vehicles →</a></div><div class="inventory" id="inventoryGrid"></div><p class="empty" id="empty">No vehicles match those filters. Try broadening your search.</p></section>
+<section class="feature" id="why"><div class="container split"><div><p class="eyebrow">THE APEX STANDARD</p><h2>Buying a car should feel <em>better.</em></h2><p>We inspect every vehicle, explain every detail and keep pricing straightforward. No pressure. No confusing surprises.</p><div class="checks"><span>✓ Multi-point inspection</span><span>✓ Transparent pricing</span><span>✓ Flexible financing</span><span>✓ Nationwide delivery</span></div><a class="btn primary" href="#contact">Talk to an advisor →</a></div><div class="quote-card"><span class="quote">“</span><p>The easiest car-buying experience I've ever had. Everything was exactly as described.</p><strong>Daniel O.</strong><small>Verified customer</small></div></div></section>
+<section class="section finance" id="finance"><div class="container finance-box"><div><p class="eyebrow">FINANCE CALCULATOR</p><h2>Know your numbers<br><em>before you visit.</em></h2><p>Get an instant estimate of your monthly payment. Adjust the figures to fit your budget.</p></div><div class="calculator"><label>Vehicle price <b id="priceOut">₦45,000,000</b><input id="carPrice" type="range" min="5000000" max="100000000" step="500000" value="45000000"></label><label>Deposit <b id="depositOut">₦9,000,000</b><input id="deposit" type="range" min="0" max="50000000" step="500000" value="9000000"></label><label>Term <b id="termOut">48 months</b><input id="term" type="range" min="12" max="72" step="12" value="48"></label><div class="monthly"><span>Estimated monthly</span><strong id="monthly">₦1,051,875</strong></div></div></div></section>
+<section class="section test" id="test-drive"><div class="container"><div class="section-head"><div><p class="eyebrow">COME EXPERIENCE IT</p><h2>Book a <em>test drive.</em></h2></div><p>Pick a vehicle and tell us when you'd like to visit. We'll confirm your appointment.</p></div><form id="testForm" class="form"><input required placeholder="Full name" id="name"><input required type="tel" placeholder="Phone / WhatsApp" id="phone"><select required id="vehicle"><option value="">Select a vehicle</option></select><input required type="date" id="date"><button class="btn primary" type="submit">Request test drive →</button></form><div class="form-message" id="formMessage"></div></div></section>
+</main>
+<footer id="contact"><div class="container footer-grid"><div><a class="brand" href="#home"><span>APEX</span><small>MOTORS</small></a><p>Premium automotive, without the premium pressure.</p></div><div><h4>Visit</h4><p>12 Admiralty Way<br>Lekki Phase 1, Lagos</p></div><div><h4>Contact</h4><p>+234 803 000 0000<br>hello@apexmotors.ng</p></div><div><h4>Hours</h4><p>Mon–Sat: 8am–6pm<br>Sunday: 11am–4pm</p></div></div><div class="footer-bottom container"><span>© 2026 Apex Motors</span><span>Built with care by NEXORA</span></div></footer>
+<div class="modal" id="carModal" aria-hidden="true"><div class="modal-card"><button class="modal-close" id="modalClose" aria-label="Close">×</button><img id="modalImg" src="" alt="Vehicle"><div class="modal-info"><p class="eyebrow" id="modalTag"></p><h2 id="modalTitle"></h2><p id="modalSpecs" class="modal-specs"></p><div class="modal-price" id="modalPrice"></div><div class="modal-actions"><a class="btn primary" id="modalWhatsApp" target="_blank" rel="noopener">WhatsApp inquiry →</a><a class="btn ghost" href="#test-drive" id="modalTest">Book test drive</a></div></div></div></div>
+<script src="script.js"></script></body></html>
