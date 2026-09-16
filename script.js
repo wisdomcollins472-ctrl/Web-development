@@ -1,40 +1,41 @@
-const cars=[
- {make:'Toyota',model:'Land Cruiser 300',year:2024,body:'SUV',price:72000000,img:'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=85',tag:'FEATURED',mileage:'18,400 km',fuel:'Petrol',color:'Black',apiModel:'Land Cruiser 300'},
- {make:'Mercedes-Benz',model:'AMG GLE 53',year:2023,body:'SUV',price:68000000,img:'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1200&q=85',tag:'CERTIFIED',mileage:'21,200 km',fuel:'Petrol',color:'Obsidian Black',apiModel:'AMG GLE 53'},
- {make:'BMW',model:'M4 Competition',year:2024,body:'Coupe',price:59000000,img:'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=85',tag:'NEW ARRIVAL',mileage:'9,800 km',fuel:'Petrol',color:'Alpine White',apiModel:'M4 Competition'},
- {make:'Lexus',model:'RX 350h',year:2023,body:'SUV',price:49000000,img:'https://images.unsplash.com/photo-1621135802920-133df287f89c?auto=format&fit=crop&w=1200&q=85',tag:'HYBRID',mileage:'16,100 km',fuel:'Hybrid',color:'Pearl White',apiModel:'RX 350h'},
- {make:'Toyota',model:'Camry XSE',year:2022,body:'Saloon',price:32000000,img:'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=1200&q=85',tag:'POPULAR',mileage:'32,600 km',fuel:'Petrol',color:'Silver',apiModel:'Camry XSE'},
- {make:'Mercedes-Benz',model:'C300 AMG Line',year:2022,body:'Saloon',price:45000000,img:'https://images.unsplash.com/photo-1598843477410-7e3a8b8b8f5f?auto=format&fit=crop&w=1200&q=85',tag:'CERTIFIED',mileage:'27,900 km',fuel:'Petrol',color:'Black',apiModel:'C300'}
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const navWrap=$('.nav-wrap'),menuBtn=$('#menuBtn'),navLinks=$('#navLinks');
+window.addEventListener('scroll',()=>navWrap.classList.toggle('scrolled',scrollY>30),{passive:true});
+menuBtn.addEventListener('click',()=>{const open=navLinks.classList.toggle('open');menuBtn.setAttribute('aria-expanded',open)});
+$$('.nav-links a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
+
+const modal=$('#enquiryModal'), form=$('#enquiryForm'), destination=$('#formDestination'), status=$('#formStatus');
+function openEnquiry(prefill=''){modal.classList.add('open');modal.setAttribute('aria-hidden','false');if(prefill)destination.value=prefill;setTimeout(()=>form.querySelector('input')?.focus(),250)}
+function closeEnquiry(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true')}
+$$('.js-plan').forEach(btn=>btn.addEventListener('click',()=>openEnquiry(btn.dataset.prefill||'')));
+$('#closeModal').addEventListener('click',closeEnquiry);modal.addEventListener('click',e=>{if(e.target===modal)closeEnquiry()});
+
+enquiryForm.addEventListener('submit',e=>{e.preventDefault();const data=new FormData(form);localStorage.setItem('aureliaEnquiry',JSON.stringify(Object.fromEntries(data)));status.textContent='Thank you. Your travel request has been saved. We will contact you with the next steps.';status.style.color='#75613d';setTimeout(()=>{closeEnquiry();status.textContent=''},1800)});
+
+const concierge=$('#concierge'),trigger=$('#conciergeTrigger'),closeConcierge=$('#closeConcierge'),chat=$('#chat'),quick=$('#quickReplies'),chatForm=$('#chatForm'),chatInput=$('#chatInput'),toast=$('#conciergeToast'),wave=$('#wave');
+let state=JSON.parse(localStorage.getItem('aureliaChat')||'null')||{step:0,answers:{},messages:[]};
+const steps=[
+ {q:'Where are you dreaming of going?',opts:['Maldives','Switzerland','Dubai','Santorini','South Africa','Bali']},
+ {q:'Wonderful choice. ✨ What kind of journey are you imagining?',opts:['Romantic','Family','Relaxation','Adventure']},
+ {q:'When are you thinking of travelling?',opts:['Next 3 months','3–6 months','6–12 months','Not sure yet']},
+ {q:'How many people will be travelling?',opts:['1','2','3–4','5+']},
+ {q:'What level of experience are you looking for?',opts:['Boutique & beautiful','Luxury','Ultra-luxury & private']},
+ {q:'What is your approximate travel budget?',opts:['Under $3,000','$3,000–$7,000','$7,000–$12,000','$12,000+']}
 ];
-const money=n=>'₦'+n.toLocaleString('en-NG');
-const grid=document.getElementById('inventoryGrid'),empty=document.getElementById('empty');
-const showroomGrid=document.getElementById('showroomGrid');
-function render(list=cars){
- grid.innerHTML=list.map((c,i)=>`<article class="car"><button class="car-img" data-car="${i}" aria-label="View ${c.make} ${c.model}" style="background-image:url('${c.img}')"><span class="tag">${c.tag}</span><span class="view-chip">View vehicle</span></button><div class="car-body"><h3>${c.make} ${c.model}</h3><p>${c.year} • ${c.body} • Automatic</p><div class="car-meta"><strong>${money(c.price)}</strong><div class="car-actions"><button class="detail-btn" data-car="${i}">Details →</button><button class="detail-btn three-btn" data-3d="${i}">View 3D ↗</button></div></div></div></article>`).join('');
- empty.style.display=list.length?'none':'block';
- document.querySelectorAll('[data-car]').forEach(x=>x.onclick=()=>openCar(+x.dataset.car));
- document.querySelectorAll('[data-3d]').forEach(x=>x.onclick=()=>open3D(+x.dataset['3d']));
-}
-function renderShowroom(){showroomGrid.innerHTML=cars.map((c,i)=>`<article class="showroom-card"><div class="showroom-card-top"><span>${c.tag}</span><small>${c.year}</small></div><div class="showroom-thumb"><img src="${c.img}" alt="${c.make} ${c.model}" loading="lazy"><div class="showroom-3d-pill">3D</div></div><div class="showroom-card-body"><h3>${c.make} ${c.model}</h3><p>${c.body} • ${money(c.price)}</p><button class="reset-view showroom-view-btn" data-3d="${i}">Explore in 3D →</button></div></article>`).join('');
- showroomGrid.querySelectorAll('[data-3d]').forEach(x=>x.onclick=()=>open3D(+x.dataset['3d']));
-}
-function filter(){const m=document.getElementById('make').value,b=document.getElementById('body').value,p=+document.getElementById('price').value;render(cars.filter(c=>(m==='all'||c.make===m||((m==='Mercedes')&&(c.make==='Mercedes-Benz')))&&(b==='all'||c.body===b)&&c.price<=p));document.getElementById('inventory').scrollIntoView({behavior:'smooth'})}
-document.getElementById('searchBtn').onclick=filter;
-document.getElementById('clearFilters').onclick=e=>{e.preventDefault();document.getElementById('make').value='all';document.getElementById('body').value='all';document.getElementById('price').value='999999999';render();document.getElementById('inventory').scrollIntoView({behavior:'smooth'})};
-render();renderShowroom();
-const carPrice=document.getElementById('carPrice'),deposit=document.getElementById('deposit'),term=document.getElementById('term');
-function calc(){let p=+carPrice.value,d=Math.min(+deposit.value,p-500000),months=+term.value;document.getElementById('priceOut').textContent=money(p);document.getElementById('depositOut').textContent=money(d);document.getElementById('termOut').textContent=months+' months';const principal=p-d,rate=.015,monthly=principal*(rate*Math.pow(1+rate,months))/(Math.pow(1+rate,months)-1);document.getElementById('monthly').textContent=money(Math.round(monthly))}[carPrice,deposit,term].forEach(x=>x.addEventListener('input',calc));calc();
-const vehicle=document.getElementById('vehicle');cars.forEach(c=>{const o=document.createElement('option');o.value=`${c.make} ${c.model}`;o.textContent=`${c.make} ${c.model} — ${money(c.price)}`;vehicle.appendChild(o)});
-document.getElementById('testForm').addEventListener('submit',e=>{e.preventDefault();const n=document.getElementById('name').value.split(' ')[0],p=document.getElementById('phone').value,v=document.getElementById('vehicle').value,d=document.getElementById('date').value;const msg=encodeURIComponent(`Hello Apex Motors, I'd like to book a test drive.\nName: ${n}\nPhone: ${p}\nVehicle: ${v}\nPreferred date: ${d}`);window.open(`https://wa.me/2348030000000?text=${msg}`,'_blank');document.getElementById('formMessage').textContent=`Thanks ${n}. Your WhatsApp request is ready — we'll confirm the appointment.`});
-document.getElementById('menuBtn').onclick=()=>document.getElementById('navLinks').classList.toggle('open');document.querySelectorAll('.nav-links a').forEach(a=>a.onclick=()=>document.getElementById('navLinks').classList.remove('open'));
-const modal=document.getElementById('carModal');
-function openCar(i){const c=cars[i];document.getElementById('modalImg').src=c.img;document.getElementById('modalImg').alt=`${c.make} ${c.model}`;document.getElementById('modalTag').textContent=c.tag;document.getElementById('modalTitle').textContent=`${c.make} ${c.model}`;document.getElementById('modalSpecs').textContent=`${c.year} • ${c.body} • Automatic • ${c.mileage} • ${c.fuel} • ${c.color}`;document.getElementById('modalPrice').textContent=money(c.price);document.getElementById('modalWhatsApp').href=`https://wa.me/2348030000000?text=${encodeURIComponent(`Hello Apex Motors, I'm interested in the ${c.year} ${c.make} ${c.model} listed at ${money(c.price)}.`)}`;document.getElementById('modalTest').onclick=()=>{modal.classList.remove('show');modal.setAttribute('aria-hidden','true');document.getElementById('vehicle').value=`${c.make} ${c.model}`};document.getElementById('modal3D').onclick=()=>{modal.classList.remove('show');modal.setAttribute('aria-hidden','true');open3D(i)};modal.classList.add('show');modal.setAttribute('aria-hidden','false')}
-document.getElementById('modalClose').onclick=()=>{modal.classList.remove('show');modal.setAttribute('aria-hidden','true')};modal.onclick=e=>{if(e.target===modal){modal.classList.remove('show');modal.setAttribute('aria-hidden','true')}};
-const viewerModal=document.getElementById('viewerModal'),viewer=document.getElementById('vehicle3d'),viewerLoading=document.getElementById('viewerLoading');
-function open3D(i){const c=cars[i];document.getElementById('viewerTitle').textContent=`${c.make} ${c.model}`;document.getElementById('viewerSpecs').textContent=`${c.year} • ${c.body} • ${c.fuel} • ${money(c.price)}`;document.getElementById('viewerWhatsApp').href=`https://wa.me/2348030000000?text=${encodeURIComponent(`Hello Apex Motors, I'm interested in the ${c.year} ${c.make} ${c.model} listed at ${money(c.price)}. I viewed it in 3D.`)}`;viewerLoading.textContent='Loading real vehicle model…';viewerLoading.classList.remove('hidden');viewer.removeAttribute('src');viewer.dataset.ciMake=c.make;viewer.dataset.ciModel=c.apiModel;viewer.dataset.ciYear=c.year;viewer.setAttribute('data-ci-make',c.make);viewer.setAttribute('data-ci-model',c.apiModel);viewer.setAttribute('data-ci-year',c.year);viewer.setAttribute('data-ci-backdrop','graphite');viewer.setAttribute('data-ci-light','6');viewer.setAttribute('data-ci-speed','18');viewer.setAttribute('camera-orbit','auto auto auto');viewer.setAttribute('field-of-view','30deg');viewerModal.classList.add('show');viewerModal.setAttribute('aria-hidden','false');setTimeout(()=>viewerLoading.classList.add('hidden'),1800)}
-document.getElementById('viewerClose').onclick=close3D;viewerModal.onclick=e=>{if(e.target===viewerModal)close3D()};
-function close3D(){viewerModal.classList.remove('show');viewerModal.setAttribute('aria-hidden','true');viewer.pause();}
-document.getElementById('viewerRotate').onclick=()=>{if(viewer.hasAttribute('auto-rotate')){viewer.removeAttribute('auto-rotate');document.getElementById('viewerRotate').textContent='Auto-rotate'}else{viewer.setAttribute('auto-rotate','');document.getElementById('viewerRotate').textContent='Stop rotation'}};
-document.getElementById('viewerReset').onclick=()=>{viewer.cameraOrbit='0deg 75deg auto';viewer.fieldOfView='30deg'};
-viewer.addEventListener('load',()=>viewerLoading.classList.add('hidden'));viewer.addEventListener('error',()=>{viewerLoading.textContent='This exact vehicle model is unavailable from the 3D catalog. No substitute model was loaded.';viewerLoading.classList.remove('hidden')});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('modalClose').click();close3D()}});
+function addMsg(text,user=false){const d=document.createElement('div');d.className=user?'user-message':'bot-message';d.innerHTML=text;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;state.messages.push({text,user});localStorage.setItem('aureliaChat',JSON.stringify(state))}
+function renderSaved(){state.messages.slice(-30).forEach(m=>{const d=document.createElement('div');d.className=m.user?'user-message':'bot-message';d.innerHTML=m.text;chat.appendChild(d)})}
+function renderOptions(){quick.innerHTML='';if(state.step>=steps.length){quick.innerHTML='<button class="quick-reply" data-action="enquiry">Share my details →</button><button class="quick-reply" data-action="restart">Start again</button>';return}steps[state.step].opts.forEach(o=>{const b=document.createElement('button');b.className='quick-reply';b.textContent=o;b.dataset.option=o;quick.appendChild(b)})}
+function botQuestion(){setTimeout(()=>{addMsg(steps[state.step].q);renderOptions()},350)}
+function choose(value){addMsg(value,true);state.answers[steps[state.step].q]=value;state.step++;localStorage.setItem('aureliaChat',JSON.stringify(state));if(state.step<steps.length)botQuestion();else setTimeout(()=>{addMsg('Perfect. I have a clearer picture now. 🌍<br><br>Let’s turn it into a real itinerary. Where can our travel team reach you?');renderOptions()},350)}
+quick.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.action==='enquiry'){openEnquiry(state.answers[steps[0].q]||'');return}if(b.dataset.action==='restart'){state={step:0,answers:{},messages:[]};localStorage.setItem('aureliaChat',JSON.stringify(state));chat.innerHTML='<div class="bot-message">Fresh start. 👋 Where would you love to go?</div>';renderOptions();return}if(b.dataset.option)choose(b.dataset.option)});
+function openChat(){concierge.classList.add('open');concierge.setAttribute('aria-hidden','false');trigger.style.display='none';toast.classList.remove('show');if(!chat.dataset.loaded){chat.dataset.loaded='1';if(state.messages.length)renderSaved();renderOptions()};chatInput.focus()}
+function closeChat(){concierge.classList.remove('open');concierge.setAttribute('aria-hidden','true');trigger.style.display='grid'}
+trigger.addEventListener('click',openChat);closeConcierge.addEventListener('click',closeChat);
+chatForm.addEventListener('submit',e=>{e.preventDefault();const v=chatInput.value.trim();if(!v)return;addMsg(v,true);chatInput.value='';setTimeout(()=>{addMsg('Thanks — I’ve noted that. Use the quick options above to continue, or I can open the enquiry form when you’re ready.');},300)});
+function waveNow(){if(concierge.classList.contains('open'))return;wave.classList.remove('waving');void wave.offsetWidth;wave.classList.add('waving');setTimeout(()=>toast.classList.add('show'),250);setTimeout(()=>toast.classList.remove('show'),4500)}
+setTimeout(waveNow,3000);setInterval(waveNow,20000);
+$$('.destination,.experience,.journey-card,.journal article,.standard,.stats div,.testimonial').forEach(el=>el.classList.add('reveal'));
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});$$('.reveal').forEach(el=>io.observe(el));
+$$('.destination').forEach(card=>card.addEventListener('click',()=>openEnquiry(card.dataset.destination)));
+$$('.experience').forEach(card=>card.addEventListener('click',()=>openEnquiry(card.dataset.destination)));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeEnquiry();closeChat()}});
