@@ -1,8 +1,12 @@
 {
-  "name": "aurelia-travels",
+  "name": "web-development",
   "version": "1.0.0",
   "private": true,
+  "type": "commonjs",
+  "description": "Static sites: Benson Idahosa University campus guide (docs/) and Aurelia Travels.",
   "scripts": {
+    "serve": "node tools/static-server.js docs 8080",
+    "verify:site": "node tools/verify-site.mjs",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed"
   },

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wisdomcollins472-ctrl.github.io/Web-development/sitemap.xml
